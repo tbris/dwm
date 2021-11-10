@@ -1,25 +1,25 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
-static const char col_gray1[]       = "#222222";
-static const char col_gray2[]       = "#444444";
-static const char col_gray3[]       = "#bbbbbb";
-static const char col_gray4[]       = "#eeeeee";
-static const char col_cyan[]        = "#005577";
+static const char *fonts[]          = { "monospace:size=8:antialias=false:autohint=false" };
+static const char dmenufont[]       = "monospace:size=8:antialias=false:autohint=false";
+static const char col_a[]           = "#990099";
+static const char col_b[]           = "#bbbbbb";
+static const char col_c[]           = "#000000";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
-	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
-	[SchemeSel]  = { col_gray4, col_cyan,  col_cyan  },
+	[SchemeNorm] = { col_b, col_c, col_c },
+	[SchemeSel]  = { col_a, col_c, col_a },
 };
 
 static const char *const autostart[] = {
-	"st", NULL,
+	"sh", "-c", "while true; do xsetroot -name \"$(bat) | $(date +%R)\"; sleep 30; done", NULL,
+	"sh", "-c", "unclutter -grab", NULL,
 	NULL /* terminate */
 };
 
@@ -32,8 +32,12 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Chromium-browser-chromium", NULL, NULL, 1 << 1,  0,           -1 },
+	{ "Brave-browser", NULL,  NULL,       1 << 1,       0,           -1 },
+	{ "Zathura",  NULL,       NULL,       1 << 2,       0,           -1 },
+	{ "mpv",      NULL,       NULL,       1 << 3,       0,           -1 },
+	{ "sxiv",     NULL,       NULL,       1 << 3,       0,           -1 },
+	{ NULL,       "libreoffice", NULL,    1 << 4,       0,           -1 },
 };
 
 /* layout(s) */
@@ -52,8 +56,8 @@ static const Layout layouts[] = {
 /* key definitions */
 #define MODKEY Mod1Mask
 #define TAGKEYS(KEY,TAG) \
-	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
-	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY,                       KEY,      toggleview,     {.ui = 1 << TAG} }, \
+	{ MODKEY|ControlMask,           KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
@@ -62,7 +66,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_c, "-nf", col_b, "-sb", col_c, "-sf", col_a, "-nhb", col_c, "-nhf", "#ff33ff", "-shb", col_c, "-shf", "#ff33ff", NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
@@ -100,6 +104,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ 0,         XF86XK_AudioRaiseVolume,      spawn,          SHCMD("amixer sset Master 5%+") },
+	{ 0,         XF86XK_AudioLowerVolume,      spawn,          SHCMD("amixer sset Master 5%-") },
+	{ 0,                XF86XK_AudioMute,      spawn,          SHCMD("amixer sset Master toggle") },
 };
 
 /* button definitions */
@@ -118,4 +125,3 @@ static Button buttons[] = {
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
 };
-
