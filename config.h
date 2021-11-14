@@ -6,25 +6,26 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=8:antialias=false:autohint=false" };
-static const char dmenufont[]       = "monospace:size=8:antialias=false:autohint=false";
-static const char col_a[]           = "#990099";
-static const char col_b[]           = "#bbbbbb";
+static const char *fonts[]          = { "Charcoal:size=8:antialias=true:autohint=true" };
+static const char dmenufont[]       = "Charcoal:size=8:antialias=true:autohint=true";
+static const char col_a[]           = "#dedede";
+static const char col_b[]           = "#828282";
 static const char col_c[]           = "#000000";
+static const char col_d[]           = "#5f5f6a";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_b, col_c, col_c },
-	[SchemeSel]  = { col_a, col_c, col_a },
+	[SchemeSel]  = { col_a, col_c, col_b },
 };
 
 static const char *const autostart[] = {
-	"sh", "-c", "while true; do xsetroot -name \"$(bat) | $(date +%R)\"; sleep 30; done", NULL,
+	"sh", "-c", "dwm_status", NULL,
 	"sh", "-c", "unclutter -grab", NULL,
 	NULL /* terminate */
 };
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+static const char *tags[] = { "Main", "Browser", "Documents", "Media" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -66,7 +67,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_c, "-nf", col_b, "-sb", col_c, "-sf", col_a, "-nhb", col_c, "-nhf", "#ff33ff", "-shb", col_c, "-shf", "#ff33ff", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_c, "-nf", col_b, "-sb", col_c, "-sf", col_a, "-nhb", col_c, "-nhf", col_d, "-shb", col_c, "-shf", col_d, NULL };
 static const char *termcmd[]  = { "st", NULL };
 
 static Key keys[] = {
