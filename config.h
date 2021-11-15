@@ -6,8 +6,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "Charcoal:size=8:antialias=true:autohint=true" };
-static const char dmenufont[]       = "Charcoal:size=8:antialias=true:autohint=true";
+static const char *fonts[]          = { "Charcoal:size=9:antialias=true:autohint=true", "BlexMono Nerd Font:size=10:antialias=true:autohint=true" };
+static const char dmenufont[]       = "Charcoal:size=9:antialias=true:autohint=true";
 static const char col_a[]           = "#dedede";
 static const char col_b[]           = "#828282";
 static const char col_c[]           = "#000000";
@@ -25,7 +25,7 @@ static const char *const autostart[] = {
 };
 
 /* tagging */
-static const char *tags[] = { "Main", "Browser", "Documents", "Media" };
+static const char *tags[] = { "     ", "Browser", "Documents", "Media" };
 
 static const Rule rules[] = {
 	/* xprop(1):
