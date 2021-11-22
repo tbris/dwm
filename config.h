@@ -18,12 +18,6 @@ static const char *colors[][3]      = {
 	[SchemeSel]  = { col_a, col_c, col_b },
 };
 
-static const char *const autostart[] = {
-	"sh", "-c", "dwm_status", NULL,
-	"sh", "-c", "unclutter -grab", NULL,
-	NULL /* terminate */
-};
-
 /* tagging */
 static const char *tags[] = { "     ", "Browser", "Documents", "Media" };
 
